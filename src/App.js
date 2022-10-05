@@ -1,14 +1,18 @@
 import './App.css';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import Home from './components/Home';
 import Main from './layout/Main';
 import News from './components/News';
 import MainTwo from './layout/MainTwo';
+import NewsDetails from './components/NewsDetails';
+import Homepage from './components/Homepage';
+
+
 
 function App() {
-  const router = createBrowserRouter([
+  const router = createBrowserRouter([ 
     {
-      path: '/', element: <Main></Main>, children: [
+      path: '/',
+      element: <Main></Main>, children: [ 
         {
           path: '/',
           loader: async () => {
@@ -21,6 +25,13 @@ function App() {
                 return fetch(`https://openapi.programming-hero.com/api/news/category/${params.newsId}`)
               },
               element: <News></News>
+            },
+            {
+              path: "/news/:newsId",
+              loader: async ({ params }) => {
+                return fetch(`https://openapi.programming-hero.com/api/news/${params.newsId}`)
+              },
+              element: <NewsDetails></NewsDetails>
             }
 
           ]
